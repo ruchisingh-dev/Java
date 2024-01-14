@@ -84,19 +84,6 @@ public class LeetCode {
         }
         return arr;
     }
-    static List<Boolean> kidsWithCandies(int[] candies, int extraCandies){
-        // https://leetcode.com/problems/kids-with-the-greatest-number-of-candies/
-        List<Boolean> ans = new ArrayList<>();
-        int max = maximumValueIndex(candies);
-        for (int candy : candies) {
-            if (candy + extraCandies >= candies[max]) {
-                ans.add(true);
-            } else {
-                ans.add(false);
-            }
-        }
-        return ans;
-    }
     static int maximumValueIndex(int[] arr){
 
         int max = arr[0];//max value
@@ -253,6 +240,48 @@ public class LeetCode {
         // more eleboration at every point of time of start and end they have the best possible answer till that time
         // and if we are saying that only item is remaining, hence cuz of the above line that is the best possible ans
         return start; // or end as both are equal
+    }
+
+
+
+    static  int rotatedBS(int[] nums, int target) {
+//         https://leetcode.com/problems/search-in-rotated-sorted-array/
+//        Explanation
+//         search the pivot(largest no. in array)
+//         search in first half => simple BS(0, pivot)
+//         otherwise search in second half(pivot+1, end)
+        int pivot = findPivot(nums);
+        if (pivot == -1){
+            return binarySearch(nums, target, 0, nums.length -1);
+        } else if (nums[pivot] == target) {
+            return pivot;
+        } else if (target >= nums[0]) {
+            return binarySearch(nums, target, 0, pivot - 1);
+        }else {
+            return binarySearch(nums, target, pivot + 1, nums.length-1);
+        }
+
+    }
+
+
+    static int findPivot(int[] nums){
+        int start = 0;
+        int end = nums.length - 1;
+
+        while (start <= end){
+            int mid = start + (end - start)/2;
+            // 4 cases over here
+            if (mid < end && nums[mid] > nums[mid + 1]){
+                return mid;
+            } else if (mid > start && nums[mid] < nums[mid -1]) {
+                return mid - 1;
+            } else if (nums[mid] <= nums[start]){
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
+        }
+        return -1;
     }
 
 }
