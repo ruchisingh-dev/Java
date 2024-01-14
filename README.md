@@ -13,4 +13,4 @@ I am currently on a learning journey to master Java programming language and Dat
 ## Progress
 
 I am actively solving problems on LeetCode to apply my knowledge and enhance my problem-solving skills. You can find my solutions in the `leetcode` directory.
-In addition, I maintain a `practice` folder where I organize my code snippets, experiments, and practice exercises to reinforce my learning.
+In addition, I maintain a `java-practice` folder where I organize my code snippets, experiments, and practice exercises to reinforce my learning.
