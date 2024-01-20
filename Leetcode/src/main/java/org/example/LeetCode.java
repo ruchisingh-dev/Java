@@ -246,11 +246,12 @@ public class LeetCode {
 
     static  int rotatedBS(int[] nums, int target) {
 //         https://leetcode.com/problems/search-in-rotated-sorted-array/
+
 //        Explanation
 //         search the pivot(largest no. in array)
 //         search in first half => simple BS(0, pivot)
 //         otherwise search in second half(pivot+1, end)
-        int pivot = findPivot(nums);
+        int pivot = findPivotWithDuplicates(nums);
         if (pivot == -1){
             return binarySearch(nums, target, 0, nums.length -1);
         } else if (nums[pivot] == target) {
@@ -262,6 +263,7 @@ public class LeetCode {
         }
 
     }
+    // this will not work in duplicate value
 
 
     static int findPivot(int[] nums){
@@ -284,4 +286,63 @@ public class LeetCode {
         return -1;
     }
 
+    static int findPivotWithDuplicates(int[] nums){
+        int start = 0;
+        int end = nums.length - 1;
+
+        while (start <= end){
+            int mid = start + (end - start)/2;
+            // 4 cases over here
+            if (mid < end && nums[mid] > nums[mid + 1]){
+                return mid;
+            } else if (mid > start && nums[mid] < nums[mid -1]) {
+                return mid - 1;
+            }
+            // if elements at mid, start, end are equal than just skip the duplicates
+            else if (nums[mid] == nums[start] && nums[mid] == nums[end]){
+                // skip the duplicate
+                // NOTE: what if these elements at start and end are the pivots?
+                // check if start is pivot
+                if (nums[start] > nums[start+1]){
+                    return start;
+                }
+                start++;
+                // check whether end is pivot
+                if(nums[end] < nums[end-1]){
+                    return end-1;
+                }
+                end--;
+            }
+            // left side is sorted, so pivot should be in right
+            else if (nums[start] < nums[mid] || (nums[start] == nums[mid] && nums[mid] > nums[end])) {
+                start = mid+1;
+            }else {
+                end = mid-1;
+            }
+
+        }
+        return -1;
+    }
+    static int findRotationCount(int[] arr){
+//        https://www.geeksforgeeks.org/find-rotation-count-rotated-sorted-array/
+        int pivot = findPivotWithDuplicates(arr);
+        int rotaionCount = pivot+1;
+        return rotaionCount;
+    }
+
+//    static int splitArray(int[] nums, int k) {
+////        https://leetcode.com/problems/split-array-largest-sum/description/
+//
+//    }
+
+
+
+
+
 }
+
+
+
+
+
+
